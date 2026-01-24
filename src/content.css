@@ -1,0 +1,207 @@
+/*
+ * Vocab Highlighter - 页面内容样式
+ * 设计原则：温暖可感知但不刺眼，优雅且实用
+ * 配色：琥珀/暖橙系 + 薄荷绿成功色
+ */
+
+/* === CSS 变量 === */
+:root {
+  --vocab-primary: #F59E0B;
+  --vocab-primary-light: #FCD34D;
+  --vocab-primary-dark: #D97706;
+  --vocab-success: #10B981;
+  --vocab-success-light: #34D399;
+}
+
+/* === 生词标记 - 温暖的琥珀色波浪下划线 === */
+.vocab-unknown-word {
+  text-decoration: underline;
+  text-decoration-color: var(--vocab-primary);
+  text-decoration-style: wavy;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border-radius: 2px;
+  position: relative;
+}
+
+/* 悬停状态 - 温暖高亮 */
+.vocab-unknown-word:hover {
+  text-decoration-color: var(--vocab-primary-dark);
+  background-color: rgba(245, 158, 11, 0.12);
+  text-decoration-thickness: 2.5px;
+}
+
+/* 点击瞬间的反馈 */
+.vocab-unknown-word:active {
+  background-color: rgba(245, 158, 11, 0.25);
+  transform: scale(0.98);
+}
+
+/* === 已认识的词 - 薄荷绿成功反馈 === */
+.vocab-known-word {
+  text-decoration: none !important;
+  background-color: rgba(16, 185, 129, 0.2);
+  border-radius: 3px;
+  animation: vocab-success-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  position: relative;
+}
+
+/* 成功弹跳 + 淡出动画 */
+@keyframes vocab-success-pop {
+  0% {
+    background-color: rgba(16, 185, 129, 0.35);
+    transform: scale(1.05);
+  }
+  30% {
+    transform: scale(1);
+  }
+  100% {
+    background-color: transparent;
+    transform: scale(1);
+  }
+}
+
+/* === 成功勾选图标动画 === */
+.vocab-known-word::after {
+  content: '✓';
+  position: absolute;
+  top: -12px;
+  right: -8px;
+  font-size: 12px;
+  color: var(--vocab-success);
+  background: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  animation: checkmark-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+@keyframes checkmark-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0) translateY(10px);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.2) translateY(-5px);
+  }
+  60% {
+    transform: scale(0.9) translateY(0);
+  }
+  80% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1) translateY(-20px);
+  }
+}
+
+/* === Toast 提示 - 温暖友好的设计 === */
+#vocab-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: linear-gradient(135deg, var(--vocab-primary), var(--vocab-primary-dark));
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.35);
+  z-index: 2147483647;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Toast 图标 */
+#vocab-toast::before {
+  content: '✓';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+#vocab-toast.vocab-toast-show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Toast 显示时的弹跳效果 */
+#vocab-toast.vocab-toast-show {
+  animation: toast-bounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes toast-bounce {
+  0% {
+    transform: translateX(-50%) translateY(100px) scale(0.8);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-50%) translateY(-10px) scale(1.02);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* === 涟漪点击效果 === */
+.vocab-unknown-word.vocab-ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(245, 158, 11, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: ripple 0.6s ease-out;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    width: 200%;
+    height: 200%;
+    opacity: 0;
+  }
+}
+
+/*
+ * 备选配色方案（可替换上面的颜色）:
+ *
+ * 方案A - 琥珀暖橙 (当前):
+ *   主色: #F59E0B, 悬停: #D97706
+ *
+ * 方案B - 珊瑚粉:
+ *   主色: #e8847c, 悬停: #d95f55
+ *
+ * 方案C - 薰衣草紫:
+ *   主色: #9b8cc7, 悬停: #7c6bb0
+ *
+ * 方案D - 海洋蓝:
+ *   主色: #6ba3d6, 悬停: #4a8bc4
+ */

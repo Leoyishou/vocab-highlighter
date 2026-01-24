@@ -1,0 +1,22 @@
+node_modules/
+dist/
+.env
+.DS_Store
+
+# Non-extension files (manim/video artifacts)
+*.mp4
+*.mp3
+*.py
+*.sh
+*.pyc
+__pycache__/
+media/
+narration_*/
+synced_parts/
+vertical_parts/
+videos/
+report-images/
+public/
+api-docs.html
+大卡流设计趋势报告.md
+caili_*.txt

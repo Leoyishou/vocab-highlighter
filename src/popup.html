@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>生词标记</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- 冷启动界面 - 首次使用时显示 -->
+  <div id="setupView" class="container" style="display:none;">
+    <h1>Welcome!</h1>
+    <p class="setup-intro">选择你的英语水平，开启学习之旅</p>
+
+    <div class="exam-selector">
+      <div class="exam-tabs">
+        <button class="exam-tab" data-exam="cet4">四级</button>
+        <button class="exam-tab" data-exam="cet6">六级</button>
+        <button class="exam-tab" data-exam="ielts">雅思</button>
+        <button class="exam-tab" data-exam="toefl">托福</button>
+      </div>
+      <div class="exam-options" id="examOptions"></div>
+      <button id="examConfirmBtn" class="btn btn-primary btn-full" style="display:none; margin-top: 12px;">确认选择</button>
+    </div>
+
+    <div class="divider">
+      <span>或</span>
+    </div>
+
+    <input type="file" id="setupFileInput" accept=".txt" style="display:none">
+    <button id="setupImportBtn" class="btn btn-secondary btn-full">
+      上传自己的词汇表
+    </button>
+    <p class="hint center">支持每行一个单词的 .txt 文件</p>
+  </div>
+
+  <!-- 主界面 -->
+  <div id="mainView" class="container" style="display:none;">
+    <h1>Vocab Highlighter</h1>
+
+    <!-- 账户同步区域 -->
+    <div class="section auth-section">
+      <!-- 未登录状态 -->
+      <div id="authLogin" style="display:none;">
+        <p class="auth-hint">登录以跨设备同步词汇</p>
+        <input type="email" id="authEmail" class="auth-input" placeholder="邮箱">
+        <input type="password" id="authPassword" class="auth-input" placeholder="密码">
+        <div class="auth-buttons">
+          <button id="loginBtn" class="btn btn-primary btn-sm">登录</button>
+          <button id="signupBtn" class="btn btn-secondary btn-sm">注册</button>
+        </div>
+        <p id="authError" class="auth-error" style="display:none;"></p>
+      </div>
+      <!-- 已登录状态 -->
+      <div id="authUser" style="display:none;">
+        <div class="auth-user-info">
+          <span class="auth-email" id="userEmail"></span>
+          <button id="logoutBtn" class="btn btn-secondary btn-xs">退出</button>
+        </div>
+        <p class="auth-sync-status" id="syncStatus">已连接</p>
+      </div>
+    </div>
+
+    <div class="toggle-section">
+      <label class="toggle">
+        <input type="checkbox" id="enableToggle" checked>
+        <span class="slider"></span>
+      </label>
+      <span class="toggle-label">启用标记</span>
+    </div>
+
+    <div class="stats">
+      <div class="stat-item">
+        <span class="stat-value" id="totalWords" data-value="0">0</span>
+        <span class="stat-label">已掌握词汇</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" id="learnedWords" data-value="0">0</span>
+        <span class="stat-label">新认识的词</span>
+      </div>
+    </div>
+
+    <!-- 每日例句 -->
+    <div class="section" id="dailySentencesSection" style="display:none;">
+      <h2>今日例句</h2>
+      <div id="dailySentencesList" class="sentences-list"></div>
+    </div>
+
+    <div class="section">
+      <h2>词汇管理</h2>
+      <div class="current-level" id="currentLevel"></div>
+      <input type="file" id="fileInput" accept=".txt" style="display:none">
+      <button id="importBtn" class="btn btn-secondary">追加导入词汇</button>
+      <button id="changeLevelBtn" class="btn btn-secondary">更换水平级别</button>
+    </div>
+
+    <div class="section">
+      <h2>新认识的单词</h2>
+      <div id="learnedList" class="word-list">
+        <p class="empty-hint">点击网页上带下划线的单词即可添加</p>
+      </div>
+      <button id="exportBtn" class="btn btn-secondary">导出新词</button>
+    </div>
+
+    <div class="section">
+      <h2>操作</h2>
+      <button id="refreshBtn" class="btn btn-secondary">刷新当前页面</button>
+      <button id="clearLearnedBtn" class="btn btn-danger">清空新认识的词</button>
+      <button id="resetAllBtn" class="btn btn-danger">重置所有数据</button>
+    </div>
+  </div>
+
+  <script type="module" src="./popup.js"></script>
+</body>
+</html>
