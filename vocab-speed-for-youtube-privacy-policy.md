@@ -30,6 +30,10 @@ On YouTube pages, the extension reads visible caption text and controls the page
 
 The extension does not sell user data. The extension does not use user data for advertising. The extension does not transfer user data except for the user-configured Supabase requests and optional single-word meaning lookup described above.
 
+## Limited Use
+
+User data is used only to provide the extension's single purpose: adapting YouTube playback speed for English listening practice and showing short vocabulary support. The extension does not use or transfer user data for unrelated purposes, advertising, creditworthiness, or resale.
+
 ## Security
 
 Settings and cached data are stored using Chrome extension storage. Users are responsible for using safe Supabase credentials. Do not enter service role keys or private server keys into the extension.
